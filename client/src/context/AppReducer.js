@@ -1,17 +1,27 @@
-export default (state, action) =>{
+export default (state, action) => {
     switch(action.type) {
-        case 'DELETE_TRANSACTION':
-            return {
-                ...state, 
-                transactions: state.transactions.filter(transaction => transaction.id !== action.payload)
-            }
-
-        case 'ADD_TRANSACTION': 
+      case 'GET_TRANSACTIONS':
         return {
-            ...state,
-            transactions: [ action.payload, ...state.transactions]
+          ...state,
+          loading: false,
+          transactions: action.payload
         }
-        default : 
+      case 'DELETE_TRANSACTION':
+        return {
+          ...state,
+          transactions: state.transactions.filter(transaction => transaction._id !== action.payload)
+        }
+      case 'ADD_TRANSACTION':
+        return {
+          ...state,
+          transactions: [...state.transactions, action.payload]
+        }
+      case 'TRANSACTION_ERROR':
+        return {
+          ...state,
+          error: action.payload
+        }
+      default:
         return state;
     }
-}
+  }
